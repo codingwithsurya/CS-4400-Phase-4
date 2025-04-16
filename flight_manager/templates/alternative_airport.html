@@ -1,0 +1,23 @@
+{% load static %}
+
+
+<h2>Alternative Airports</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            {% for i in columns %}
+                <th>{{ i }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for j in data %}
+            <tr>
+                {% for val in j %}
+                    <td>{{ val }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
