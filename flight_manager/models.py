@@ -165,7 +165,7 @@ class Flight(models.Model):
     flightid = models.CharField(db_column='flightID', primary_key=True, max_length=50)  # Field name made lowercase.
     routeid = models.ForeignKey('Route', models.DO_NOTHING, db_column='routeID')  # Field name made lowercase.
     support_airline = models.ForeignKey(Airplane, models.DO_NOTHING, db_column='support_airline', blank=True, null=True)
-    support_tail = models.ForeignKey(Airplane, models.DO_NOTHING, db_column='support_tail', to_field='tail_num', related_name='flight_support_tail_set', blank=True, null=True, unique=True)
+    support_tail = models.ForeignKey(Airplane, models.DO_NOTHING, db_column='support_tail', to_field='tail_num', related_name='flight_support_tail_set', blank=True, null=True)
     progress = models.IntegerField(blank=True, null=True)
     airplane_status = models.CharField(max_length=100, blank=True, null=True)
     next_time = models.TimeField(blank=True, null=True)
