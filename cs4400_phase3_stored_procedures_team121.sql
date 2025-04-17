@@ -76,6 +76,20 @@ sp_main: begin
         leave sp_main;
     end if;
 
+    -- 
+    if ip_plane_type='Boeing' and ip_neo is not null then
+        leave sp_main;
+    end if;
+
+    if (ip_plane_type is null or ip_plane_type not in ('Boeing', 'Airbus')) and (ip_neo is not null or ip_maintenanced is not null or ip_model is not null) then
+        leave sp_main;
+    end if;
+
+    if (ip_plane_type is null or ip_plane_type not in ('Boeing', 'Airbus')) then
+        leave sp_main;
+    end if;
+
+
     -- Insert into location first due to FK constraint
     insert into location (locationID) values (ip_locationID);
 
