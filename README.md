@@ -18,9 +18,9 @@ https://docs.google.com/document/d/1633UA-v3UTln1s15PQil72YFTob3CcfW-uWh_LKw8yI/
 * Password: databasecourse
 
 ## View Urls
-* 'alternative-airport/'
-* 'flights-in-the-air/'
-* 'flights-on-the-ground/'
-* 'people-in-the-air/'
-* 'people-on-the-ground/'
-* 'route-summary/'
+* /alternative-airport/
+* /flights-in-the-air/
+* /flights-on-the-ground/
+* /people-in-the-air/
+* /people-on-the-ground/
+* /route-summary/
