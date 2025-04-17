@@ -21,8 +21,6 @@ from flight_manager import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
-    path('flight-list/', views.flight_list),
-    path('airport-info/<str:airport_id>/', views.airport_detail),
     path('alternative-airport/', views.alternative_airport_view),  
     path('flights-in-the-air/', views.flights_in_the_air_view),
     path('flights-on-the-ground/', views.flights_on_the_ground_view),
