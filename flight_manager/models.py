@@ -7,6 +7,15 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
+##********* Demo code for react test only
+class Post(models.Model):
+    title =  models.CharField(max_length=200)
+    body = models.TextField()
+    
+    def __str__(self):
+        return f"Post: {self.title}"
+##*********
+
 
 class Airline(models.Model):
     airlineid = models.CharField(db_column='airlineID', primary_key=True, max_length=50)  # Field name made lowercase.

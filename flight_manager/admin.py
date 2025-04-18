@@ -4,6 +4,10 @@ from django.contrib import admin
 from django.contrib import admin
 from .models import Airline, Airplane, Airport, Flight, Passenger, Person, Pilot, Route, Location, RoutePath,PilotLicenses,PassengerVacations
 
+## ***Demo code
+from .models import Post
+admin.site.register(Post)
+
 admin.site.register(Airline)
 # Says already registered?
 #admin.site.register(Airplane)

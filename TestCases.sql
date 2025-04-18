@@ -187,16 +187,7 @@ call simulation_cycle();
     and f.progress = l.sequence
     group by ai.locationID, a.locationID, a.tail_num, l.departure, l.arrival, f.cost;
 
-
-
-
-
 select * from flight;
-
-
-
-
-
 
 select *
     from flight f

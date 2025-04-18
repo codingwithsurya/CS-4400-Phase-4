@@ -38,8 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'flight_manager'
+    'flight_manager',
+    'corsheaders',
+    'rest_framework',
+    'posts'
+    
 ]
+
+CORS_ALLOWED_ORIGINS=['https://localhost:5173']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

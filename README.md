@@ -3,9 +3,19 @@ cs 4400 phase 4 project shared github
 
 https://docs.google.com/document/d/1633UA-v3UTln1s15PQil72YFTob3CcfW-uWh_LKw8yI/edit?usp=sharing
 
+### Testing front end setup to check stored procedures
+https://www.youtube.com/watch?v=eXrwF4LXF5c
+* On minute 9 currently
 
+
+### Environment setup
+```pip install django djangorestframework django-cors-headers```
 ### Start Server
 ``` python manage.py runserver ```
+
+### Run migrations in case run into errors
+```python manage.py makemigrations;```
+```python manage.py migrate;```
 
 ### Setup DB Initially
 ```python manage.py inspectdb > models.py```
