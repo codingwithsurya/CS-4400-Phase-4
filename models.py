@@ -18,7 +18,8 @@ class Airline(models.Model):
 
 
 class Airplane(models.Model):
-    airlineid = models.OneToOneField(Airline, models.DO_NOTHING, db_column='airlineID', primary_key=True)  # Field name made lowercase. The composite primary key (airlineID, tail_num) found, that is not supported. The first column is selected.
+    pk = models.CompositePrimaryKey('airlineID', 'tail_num')
+    airlineid = models.ForeignKey(Airline, models.DO_NOTHING, db_column='airlineID')  # Field name made lowercase.
     tail_num = models.CharField(max_length=50)
     seat_capacity = models.IntegerField()
     speed = models.IntegerField()
@@ -234,7 +235,8 @@ class Passenger(models.Model):
 
 
 class PassengerVacations(models.Model):
-    personid = models.OneToOneField('Person', models.DO_NOTHING, db_column='personID', primary_key=True)  # Field name made lowercase. The composite primary key (personID, sequence) found, that is not supported. The first column is selected.
+    pk = models.CompositePrimaryKey('personID', 'sequence')
+    personid = models.ForeignKey('Person', models.DO_NOTHING, db_column='personID')  # Field name made lowercase.
     airportid = models.ForeignKey(Airport, models.DO_NOTHING, db_column='airportID')  # Field name made lowercase.
     sequence = models.IntegerField()
 
@@ -267,7 +269,8 @@ class Pilot(models.Model):
 
 
 class PilotLicenses(models.Model):
-    personid = models.OneToOneField(Pilot, models.DO_NOTHING, db_column='personID', primary_key=True)  # Field name made lowercase. The composite primary key (personID, license) found, that is not supported. The first column is selected.
+    pk = models.CompositePrimaryKey('personID', 'license')
+    personid = models.ForeignKey(Pilot, models.DO_NOTHING, db_column='personID')  # Field name made lowercase.
     license = models.CharField(max_length=100)
 
     class Meta:
@@ -285,7 +288,8 @@ class Route(models.Model):
 
 
 class RoutePath(models.Model):
-    routeid = models.OneToOneField(Route, models.DO_NOTHING, db_column='routeID', primary_key=True)  # Field name made lowercase. The composite primary key (routeID, sequence) found, that is not supported. The first column is selected.
+    pk = models.CompositePrimaryKey('routeID', 'sequence')
+    routeid = models.ForeignKey(Route, models.DO_NOTHING, db_column='routeID')  # Field name made lowercase.
     legid = models.ForeignKey(Leg, models.DO_NOTHING, db_column='legID')  # Field name made lowercase.
     sequence = models.IntegerField()
 

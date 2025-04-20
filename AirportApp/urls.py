@@ -14,17 +14,21 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# AirportApp/urls.py
 from django.contrib import admin
-from django.urls import path
-from flight_manager import views
+from django.urls import path, include # Add include
+from flight_manager import views as template_views # Rename to avoid conflicts
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
-    path('alternative-airport/', views.alternative_airport_view),  
-    path('flights-in-the-air/', views.flights_in_the_air_view),
-    path('flights-on-the-ground/', views.flights_on_the_ground_view),
-    path('people-in-the-air/', views.people_in_the_air_view),
-    path('people-on-the-ground/', views.people_on_the_ground_view),  
-    path('route-summary/', views.route_summary_view)
-    ]
+    path('', template_views.index), # Your existing template views
+    path('alternative-airport/', template_views.alternative_airport_view),
+    path('flights-in-the-air/', template_views.flights_in_the_air_view),
+    path('flights-on-the-ground/', template_views.flights_on_the_ground_view),
+    path('people-in-the-air/', template_views.people_in_the_air_view),
+    path('people-on-the-ground/', template_views.people_on_the_ground_view),
+    path('route-summary/', template_views.route_summary_view),
+
+    # Include API urls
+    path('api/', include('flight_manager.api.urls')), # Add this line
+]
