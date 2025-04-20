@@ -26,7 +26,8 @@ from .views_lookups import (
     get_flights_view,
     get_passengers_view,
     get_routes_view,
-    get_pilot_licenses_view
+    get_pilot_licenses_view,
+    get_airplanes_view
 )
 
 # --- API Views ---

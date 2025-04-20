@@ -2,7 +2,7 @@
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.db import connection, DatabaseError
-from ..models import Airline, Location, Person, Pilot, Flight, Route
+from ..models import Airline, Location, Person, Pilot, Flight, Route, Airplane
 
 # --- Data Lookup API Views ---
 
@@ -63,10 +63,10 @@ def get_passengers_view(request):
 @require_http_methods(["GET"])
 def get_routes_view(request):
     try:
-        # Query the database for routes
+        # Query the database for routes - only fetch routeID
         with connection.cursor() as cursor:
             cursor.execute("""
-                SELECT r.routeID, r.distance
+                SELECT r.routeID
                 FROM route r
                 ORDER BY r.routeID
             """)
@@ -94,3 +94,20 @@ def get_pilot_licenses_view(request):
         return JsonResponse(licenses, safe=False)
     except Exception as e:
         return JsonResponse({'detail': f'Error fetching pilot licenses: {e}'}, status=500)
+
+@require_http_methods(["GET"])
+def get_airplanes_view(request):
+    try:
+        # Query the database for airplanes with their airline ID and tail number
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT a.airlineID, a.tail_num
+                FROM airplane a
+                ORDER BY a.airlineID, a.tail_num
+            """)
+            columns = [col[0] for col in cursor.description]
+            airplanes = [dict(zip(columns, row)) for row in cursor.fetchall()]
+            
+        return JsonResponse(airplanes, safe=False)
+    except Exception as e:
+        return JsonResponse({'detail': f'Error fetching airplanes: {e}'}, status=500)

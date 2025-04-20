@@ -27,4 +27,5 @@ urlpatterns = [
     path('passengers/', views.get_passengers_view, name='api_get_passengers'),
     path('routes/', views.get_routes_view, name='api_get_routes'),
     path('pilot-licenses/', views.get_pilot_licenses_view, name='api_get_pilot_licenses'),
+    path('airplanes/', views.get_airplanes_view, name='api_get_airplanes'),
 ]
