@@ -45,7 +45,9 @@ INSTALLED_APPS = [
     
 ]
 
-CORS_ALLOWED_ORIGINS=['http://localhost:5173']
+CORS_ALLOWED_ORIGINS = ['http://localhost:5173', 'http://127.0.0.1:5173']
+CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+CORS_ALLOW_HEADERS = ['Content-Type', 'X-Requested-With']
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  # This needs to be at the top

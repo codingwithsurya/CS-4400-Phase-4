@@ -1,10 +1,13 @@
 // frontendFlights/src/utils/api.js
 
 // API utility functions for making calls to the backend
-const API_BASE_URL = 'http://localhost:8080'; // Using port 8080 for Django server
+const API_BASE_URL = 'http://localhost:8000'; // Using port 8080 for Django server
 
 // Generic function for making API requests
 async function apiRequest(endpoint, method = 'GET', data = null) {
+  // Log the request for debugging
+  console.log(`Making ${method} request to: ${endpoint}`, data);
+  
   // Construct the full URL. We need to be careful not to double the slashes.
   const fullUrl = `${API_BASE_URL}${endpoint.startsWith('/') ? '' : '/'}${endpoint}`;
   
@@ -23,7 +26,9 @@ async function apiRequest(endpoint, method = 'GET', data = null) {
   }
 
   try {
+    console.log('Fetch options:', options);
     const response = await fetch(fullUrl, options);
+    console.log('Response status:', response.status);
 
     // For non-2xx responses, try to parse error message
     if (!response.ok) {
@@ -47,7 +52,11 @@ async function apiRequest(endpoint, method = 'GET', data = null) {
     return await response.json();
   } catch (error) {
     console.error('API request error:', fullUrl, error); // Log the URL too
-    throw error; // Re-throw the error to be caught by the component
+    // Provide more specific error message to the component
+    const enhancedError = new Error(
+      `API request failed: ${error.message}. This could be a network issue or the server might be down.`
+    );
+    throw enhancedError; // Throw enhanced error for better user feedback
   }
 }
 
@@ -73,7 +82,7 @@ async function apiRequest(endpoint, method = 'GET', data = null) {
 export const addAirplane = (data) => apiRequest('/api/add-airplane/', 'POST', data); // Example endpoint
 export const addAirport = (data) => apiRequest('/api/add-airport/', 'POST', data); // Example endpoint
 export const addPerson = (data) => apiRequest('/api/add-person/', 'POST', data); // Example endpoint
-export const grantOrRevokePilotLicense = (data) => apiRequest('/api/grant-revoke-pilot-license/', 'POST', data); // Example endpoint
+export const grantOrRevokePilotLicense = (data) => apiRequest('/api/pilot-licenses/', 'POST', data); // get pilot licenses
 export const offerFlight = (data) => apiRequest('/api/offer-flight/', 'POST', data); // Example endpoint
 export const flightLanding = (data) => apiRequest('/api/flight-landing/', 'POST', data); // Example endpoint
 export const flightTakeoff = (data) => apiRequest('/api/flight-takeoff/', 'POST', data); // Example endpoint
@@ -93,6 +102,7 @@ export const getPeopleOnTheGround = () => apiRequest('/people-on-the-ground/'); 
 export const getRouteSummary = () => apiRequest('/route-summary/'); // Assumes DRF or custom JSON view
 export const getAlternativeAirports = () => apiRequest('/alternative-airport/'); // Assumes DRF or custom JSON view
 
+
 // --- Utility endpoints ---
 // Note: Need corresponding backend views for these
 export const getAirlines = () => apiRequest('/api/airlines/'); // Example endpoint
@@ -102,6 +112,7 @@ export const getAirplanes = () => apiRequest('/api/airplanes/'); // Example endp
 export const getPilots = () => apiRequest('/api/pilots/'); // Example endpoint
 export const getFlights = () => apiRequest('/api/flights/'); // Example endpoint
 export const getLocations = () => apiRequest('/api/locations/'); // Example endpoint
+export const getPilotLicenses = () => apiRequest('/api/pilot-licenses/'); // Added for GrantRevokePilotLicense component
 
 // Mock API call for components not yet connected
 export const mockApiCall = (data) => {

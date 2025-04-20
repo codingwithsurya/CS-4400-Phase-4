@@ -2,15 +2,14 @@ import { useState } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import AddAirplane from './components/procedures/AddAirplane';
-// Commented out imports for components that don't exist yet
-// import AddAirport from './components/procedures/AddAirport';
-// import AddPerson from './components/procedures/AddPerson';
-// import GrantOrRevokePilotLicense from './components/procedures/GrantOrRevokePilotLicense';
-// import OfferFlight from './components/procedures/OfferFlight';
-// import FlightLanding from './components/procedures/FlightLanding';
-// import FlightTakeoff from './components/procedures/FlightTakeoff';
-// import PassengersBoard from './components/procedures/PassengersBoard';
-// import PassengersDisembark from './components/procedures/PassengersDisembark';
+import AddAirport from './components/procedures/AddAirport';
+import AddPerson from './components/procedures/AddPerson';
+import GrantRevokePilotLicense from './components/procedures/GrantRevokePilotLicense';
+import OfferFlight from './components/procedures/OfferFlight';
+import FlightLanding from './components/procedures/FlightLanding';
+import FlightTakeoff from './components/procedures/FlightTakeoff';
+import PassengersBoard from './components/procedures/PassengersBoard';
+import PassengersDisembark from './components/procedures/PassengersDisembark';
 // import AssignPilot from './components/procedures/AssignPilot';
 // import RecycleCrew from './components/procedures/RecycleCrew';
 // import RetireFlight from './components/procedures/RetireFlight';
@@ -29,23 +28,22 @@ function App() {
     switch (currentView) {
       case 'add-airplane':
         return <AddAirplane />;
-      // Commented out cases for components that don't exist yet
-      // case 'add-airport':
-      //   return <AddAirport />;
-      // case 'add-person':
-      //   return <AddPerson />;
-      // case 'grant-revoke-license':
-      //   return <GrantOrRevokePilotLicense />;
-      // case 'offer-flight':
-      //   return <OfferFlight />;
-      // case 'flight-landing':
-      //   return <FlightLanding />;
-      // case 'flight-takeoff':
-      //   return <FlightTakeoff />;
-      // case 'passengers-board':
-      //   return <PassengersBoard />;
-      // case 'passengers-disembark':
-      //   return <PassengersDisembark />;
+      case 'add-airport':
+        return <AddAirport />;
+      case 'add-person':
+        return <AddPerson />;
+      case 'grant-revoke-license':
+        return <GrantRevokePilotLicense />;
+      case 'offer-flight':
+        return <OfferFlight />;
+      case 'flight-landing':
+        return <FlightLanding />;
+      case 'flight-takeoff':
+        return <FlightTakeoff />;
+      case 'passengers-board':
+        return <PassengersBoard />;
+      case 'passengers-disembark':
+        return <PassengersDisembark />;
       // case 'assign-pilot':
       //   return <AssignPilot />;
       // case 'recycle-crew':
