@@ -14,7 +14,7 @@ import AssignPilot from './components/procedures/AssignPilot';
 import RecycleCrew from './components/procedures/RecycleCrew';
 import RetireFlight from './components/procedures/RetireFlight';
 import SimulationCycle from './components/procedures/SimulationCycle';
-// import FlightsInTheAir from './components/views/FlightsInTheAir';
+import FlightsInTheAir from './components/views/FlightsInTheAir';
 // import FlightsOnTheGround from './components/views/FlightsOnTheGround';
 // import PeopleInTheAir from './components/views/PeopleInTheAir';
 // import PeopleOnTheGround from './components/views/PeopleOnTheGround';
@@ -52,8 +52,8 @@ function App() {
         return <RetireFlight />;
       case 'simulation-cycle':
         return <SimulationCycle />;
-      // case 'flights-in-air':
-      //   return <FlightsInTheAir />;
+      case 'flights-in-air':
+        return <FlightsInTheAir />;
       // case 'flights-on-ground':
       //   return <FlightsOnTheGround />;
       // case 'people-in-air':

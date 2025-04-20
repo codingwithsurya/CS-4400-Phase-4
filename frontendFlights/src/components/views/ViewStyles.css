@@ -1,0 +1,67 @@
+/* Common styles for views */
+
+.view-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.view-container h1 {
+  color: #000;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+  color: #000;
+}
+
+.error {
+  color: #ff0000;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: #000;
+}
+
+.data-table th {
+  background-color: #3498db;
+  color: #000;
+  padding: 12px;
+  text-align: left;
+}
+
+.data-table td {
+  padding: 10px;
+  border-bottom: 1px solid #0d0d0d;
+  color: #000;
+}
+
+.data-table tbody tr:hover {
+  background-color: #ffffff;
+}
+
+.data-table tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+@media screen and (max-width: 768px) {
+  .data-table {
+    font-size: 14px;
+  }
+  
+  .data-table th, .data-table td {
+    padding: 8px;
+  }
+}
