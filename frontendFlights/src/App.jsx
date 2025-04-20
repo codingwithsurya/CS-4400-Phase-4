@@ -10,10 +10,10 @@ import FlightLanding from './components/procedures/FlightLanding';
 import FlightTakeoff from './components/procedures/FlightTakeoff';
 import PassengersBoard from './components/procedures/PassengersBoard';
 import PassengersDisembark from './components/procedures/PassengersDisembark';
-// import AssignPilot from './components/procedures/AssignPilot';
-// import RecycleCrew from './components/procedures/RecycleCrew';
-// import RetireFlight from './components/procedures/RetireFlight';
-// import SimulationCycle from './components/procedures/SimulationCycle';
+import AssignPilot from './components/procedures/AssignPilot';
+import RecycleCrew from './components/procedures/RecycleCrew';
+import RetireFlight from './components/procedures/RetireFlight';
+import SimulationCycle from './components/procedures/SimulationCycle';
 // import FlightsInTheAir from './components/views/FlightsInTheAir';
 // import FlightsOnTheGround from './components/views/FlightsOnTheGround';
 // import PeopleInTheAir from './components/views/PeopleInTheAir';
@@ -44,14 +44,14 @@ function App() {
         return <PassengersBoard />;
       case 'passengers-disembark':
         return <PassengersDisembark />;
-      // case 'assign-pilot':
-      //   return <AssignPilot />;
-      // case 'recycle-crew':
-      //   return <RecycleCrew />;
-      // case 'retire-flight':
-      //   return <RetireFlight />;
-      // case 'simulation-cycle':
-      //   return <SimulationCycle />;
+      case 'assign-pilot':
+        return <AssignPilot />;
+      case 'recycle-crew':
+        return <RecycleCrew />;
+      case 'retire-flight':
+        return <RetireFlight />;
+      case 'simulation-cycle':
+        return <SimulationCycle />;
       // case 'flights-in-air':
       //   return <FlightsInTheAir />;
       // case 'flights-on-ground':

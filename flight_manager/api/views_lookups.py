@@ -2,112 +2,98 @@
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.db import connection, DatabaseError
-from ..models import Airline, Location, Person, Pilot, Flight, Route, Airplane
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from ..models import Airline, Location, Person, Pilot, Flight, Route, Airplane, Passenger, PilotLicenses
+from .serializers import (AirlineSerializer, LocationSerializer, PersonSerializer, 
+                          PilotSerializer, FlightSerializer, RouteSerializer, 
+                          AirplaneSerializer, PassengerSerializer, PilotLicenseSerializer)
 
 # --- Data Lookup API Views ---
 
-@require_http_methods(["GET"])
+@api_view(['GET'])
 def get_pilots_view(request):
+    """
+    API view to retrieve a list of pilots with their details.
+    """
     try:
-        # Query the database for all pilots with necessary details
-        with connection.cursor() as cursor:
-            cursor.execute("""
-                SELECT p.personID, p.first_name, p.last_name, pi.taxID, pi.experience, pi.commanding_flight
-                FROM person p
-                JOIN pilot pi ON p.personID = pi.personID
-                ORDER BY p.personID
-            """)
-            columns = [col[0] for col in cursor.description]
-            pilots = [dict(zip(columns, row)) for row in cursor.fetchall()]
-            
-        return JsonResponse(pilots, safe=False)
+        # Use Django ORM with select_related to fetch related Person data efficiently
+        pilots = Pilot.objects.select_related('personid').all()
+        serializer = PilotSerializer(pilots, many=True)
+        return Response(serializer.data)
     except Exception as e:
-        return JsonResponse({'detail': f'Error fetching pilots: {e}'}, status=500)
+        print(f"Error in get_pilots_view: {e}")
+        return Response({'detail': f'Error fetching pilots: {e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@require_http_methods(["GET"])
+@api_view(['GET'])
 def get_flights_view(request):
     try:
-        # Query the database for active flights
+        # Use a raw SQL query to avoid ORM time parsing issues
         with connection.cursor() as cursor:
             cursor.execute("""
-                SELECT f.flightID, f.routeID, f.support_airline, f.support_tail, f.progress, 
-                       f.airplane_status, f.next_time
+                SELECT f.flightID, f.routeID, f.support_airline, f.support_tail, 
+                       f.progress, f.airplane_status, 
+                       TIME_FORMAT(f.next_time, '%H:%i:%s') as next_time, 
+                       f.cost
                 FROM flight f
-                ORDER BY f.flightID
             """)
             columns = [col[0] for col in cursor.description]
             flights = [dict(zip(columns, row)) for row in cursor.fetchall()]
             
         return JsonResponse(flights, safe=False)
     except Exception as e:
-        return JsonResponse({'detail': f'Error fetching flights: {e}'}, status=500)
+        return JsonResponse({'detail': f'Error fetching flights: {str(e)}'}, status=500)
 
-@require_http_methods(["GET"])
+@api_view(['GET'])
 def get_passengers_view(request):
+    """
+    API view to retrieve a list of passengers with their details.
+    """
     try:
-        # Query the database for passengers
-        with connection.cursor() as cursor:
-            cursor.execute("""
-                SELECT p.personID, p.first_name, p.last_name, pa.miles, pa.funds
-                FROM person p
-                JOIN passenger pa ON p.personID = pa.personID
-                ORDER BY p.personID
-            """)
-            columns = [col[0] for col in cursor.description]
-            passengers = [dict(zip(columns, row)) for row in cursor.fetchall()]
-            
-        return JsonResponse(passengers, safe=False)
+        # Use Django ORM with select_related for efficient queries
+        passengers = Passenger.objects.select_related('personid').all()
+        serializer = PassengerSerializer(passengers, many=True)
+        return Response(serializer.data)
     except Exception as e:
-        return JsonResponse({'detail': f'Error fetching passengers: {e}'}, status=500)
+        print(f"Error in get_passengers_view: {e}")
+        return Response({'detail': f'Error fetching passengers: {e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@require_http_methods(["GET"])
+@api_view(['GET'])
 def get_routes_view(request):
+    """
+    API view to retrieve a list of routes.
+    """
     try:
-        # Query the database for routes - only fetch routeID
-        with connection.cursor() as cursor:
-            cursor.execute("""
-                SELECT r.routeID
-                FROM route r
-                ORDER BY r.routeID
-            """)
-            columns = [col[0] for col in cursor.description]
-            routes = [dict(zip(columns, row)) for row in cursor.fetchall()]
-            
-        return JsonResponse(routes, safe=False)
+        routes = Route.objects.all()
+        serializer = RouteSerializer(routes, many=True)
+        return Response(serializer.data)
     except Exception as e:
-        return JsonResponse({'detail': f'Error fetching routes: {e}'}, status=500)
+        print(f"Error in get_routes_view: {e}")
+        return Response({'detail': f'Error fetching routes: {e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@require_http_methods(["GET"])
+@api_view(['GET'])
 def get_pilot_licenses_view(request):
+    """
+    API view to retrieve pilot licenses.
+    """
     try:
-        # Query the database for pilot licenses
-        with connection.cursor() as cursor:
-            cursor.execute("""
-                SELECT pl.personID, pl.license, p.first_name, p.last_name
-                FROM pilot_licenses pl
-                JOIN person p ON pl.personID = p.personID
-                ORDER BY pl.personID, pl.license
-            """)
-            columns = [col[0] for col in cursor.description]
-            licenses = [dict(zip(columns, row)) for row in cursor.fetchall()]
-            
-        return JsonResponse(licenses, safe=False)
+        licenses = PilotLicenses.objects.select_related('personid', 'personid__personid').all()
+        serializer = PilotLicenseSerializer(licenses, many=True)
+        return Response(serializer.data)
     except Exception as e:
-        return JsonResponse({'detail': f'Error fetching pilot licenses: {e}'}, status=500)
+        print(f"Error in get_pilot_licenses_view: {e}")
+        return Response({'detail': f'Error fetching pilot licenses: {e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@require_http_methods(["GET"])
+@api_view(['GET'])
 def get_airplanes_view(request):
+    """
+    API view to retrieve a list of airplanes.
+    """
     try:
-        # Query the database for airplanes with their airline ID and tail number
-        with connection.cursor() as cursor:
-            cursor.execute("""
-                SELECT a.airlineID, a.tail_num
-                FROM airplane a
-                ORDER BY a.airlineID, a.tail_num
-            """)
-            columns = [col[0] for col in cursor.description]
-            airplanes = [dict(zip(columns, row)) for row in cursor.fetchall()]
-            
-        return JsonResponse(airplanes, safe=False)
+        airplanes = Airplane.objects.all()
+        serializer = AirplaneSerializer(airplanes, many=True)
+        return Response(serializer.data)
     except Exception as e:
-        return JsonResponse({'detail': f'Error fetching airplanes: {e}'}, status=500)
+        print(f"Error in get_airplanes_view: {e}")
+        return Response({'detail': f'Error fetching airplanes: {e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
