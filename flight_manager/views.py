@@ -10,6 +10,7 @@ from .models import Airline, Airplane, Airport, Flight, Passenger, Person, Pilot
 from django.db.models import Count, Avg, Sum
 from .forms import AddAirplaneForm, AddAirportForm, AddPersonForm, OfferFlightForm, FlightActionForm, PilotLicenseForm, AssignPilotForm
 from .custom_forms import SafeFlightForm, SafeAssignPilotForm
+from .utils import safe_execute_view_query
 
 def index(request):
     return render(request, "index.html")
@@ -88,62 +89,62 @@ def simulation_cycle_sp():
 
 ## Alternative Airport view
 def alternative_airport_view(request):
-    with connection.cursor() as db_call:
-        db_call.execute("select * from alternative_airports;")
-        row_values = db_call.fetchall()
-        colNames=[]
-        for i in db_call.description:
-            colNames.append(i[0])
+    try:
+        colNames, row_values = safe_execute_view_query('alternative_airports')
+    except Exception as e:
+        colNames = []
+        row_values = []
+        messages.error(request, f"Error retrieving data: {str(e)}")
     return render(request, 'alternative_airport.html', {'columns': colNames,'data': row_values})
 
 ## Flights in air view
 def flights_in_the_air_view(request):
-    with connection.cursor() as db_call:
-        db_call.execute("select * from flights_in_the_air;")
-        row_values = db_call.fetchall()
-        colNames=[]
-        for i in db_call.description:
-            colNames.append(i[0])    
+    try:
+        colNames, row_values = safe_execute_view_query('flights_in_the_air')
+    except Exception as e:
+        colNames = []
+        row_values = []
+        messages.error(request, f"Error retrieving data: {str(e)}")
     return render(request, 'flights_in_the_air.html', {'columns': colNames,'data': row_values})
 
 ## flights on ground view
 def flights_on_the_ground_view(request):
-    with connection.cursor() as db_call:
-        db_call.execute("select * from flights_on_the_ground;")
-        row_values = db_call.fetchall()
-        colNames=[]
-        for i in db_call.description:
-            colNames.append(i[0])      
+    try:
+        colNames, row_values = safe_execute_view_query('flights_on_the_ground')
+    except Exception as e:
+        colNames = []
+        row_values = []
+        messages.error(request, f"Error retrieving data: {str(e)}")
     return render(request, 'flights_on_the_ground.html', {'columns': colNames,'data': row_values})
 
 ## People in air view
 def people_in_the_air_view(request):
-    with connection.cursor() as db_call:
-        db_call.execute("select * from people_in_the_air;")
-        row_values = db_call.fetchall()
-        colNames=[]
-        for i in db_call.description:
-            colNames.append(i[0])       
-        return render(request, 'people_in_the_air.html', {'columns': colNames,'data': row_values})
+    try:
+        colNames, row_values = safe_execute_view_query('people_in_the_air')
+    except Exception as e:
+        colNames = []
+        row_values = []
+        messages.error(request, f"Error retrieving data: {str(e)}")   
+    return render(request, 'people_in_the_air.html', {'columns': colNames,'data': row_values})
 
 ## People on ground view
 def people_on_the_ground_view(request):
-    with connection.cursor() as db_call:
-        db_call.execute("select * from people_on_the_ground;")
-        row_values = db_call.fetchall()
-        colNames=[]
-        for i in db_call.description:
-            colNames.append(i[0])     
+    try:
+        colNames, row_values = safe_execute_view_query('people_on_the_ground')
+    except Exception as e:
+        colNames = []
+        row_values = []
+        messages.error(request, f"Error retrieving data: {str(e)}")   
     return render(request, 'people_on_the_ground.html', {'columns': colNames,'data': row_values})
 
 ## route summary view
 def route_summary_view(request):
-    with connection.cursor() as db_call:
-        db_call.execute("select * from route_summary;")
-        row_values = db_call.fetchall()
-        colNames=[]
-        for i in db_call.description:
-            colNames.append(i[0])      
+    try:
+        colNames, row_values = safe_execute_view_query('route_summary')
+    except Exception as e:
+        colNames = []
+        row_values = []
+        messages.error(request, f"Error retrieving data: {str(e)}")
     return render(request, 'route_summary.html', {'columns': colNames,'data': row_values})
 
 # Form-based views for stored procedures

@@ -12,6 +12,7 @@
             <div class="card-body">
                 <div class="list-group">
                     <a href="{% url 'add_airplane' %}" class="list-group-item list-group-item-action">Add Airplane</a>
+                    <a href="{% url 'add_airport' %}" class="list-group-item list-group-item-action">Add Airport</a>
                     <a href="{% url 'flight_takeoff' %}" class="list-group-item list-group-item-action">Flight Takeoff</a>
                     <a href="{% url 'flight_landing' %}" class="list-group-item list-group-item-action">Flight Landing</a>
                     <a href="{% url 'offer_flight' %}" class="list-group-item list-group-item-action">Offer Flight</a>
@@ -32,6 +33,8 @@
                     <a href="{% url 'flights_on_ground' %}" class="list-group-item list-group-item-action">Flights On Ground</a>
                     <a href="{% url 'people_in_air' %}" class="list-group-item list-group-item-action">People In Air</a>
                     <a href="{% url 'people_on_ground' %}" class="list-group-item list-group-item-action">People On Ground</a>
+                    <a href="{% url 'route_summary' %}" class="list-group-item list-group-item-action">Route Summary</a>
+                    <a href="{% url 'alternative_airports' %}" class="list-group-item list-group-item-action">Alternative Airports</a>
                 </div>
             </div>
         </div>
@@ -63,10 +66,7 @@
             </div>
             <div class="card-body">
                 <div class="list-group">
-                    <a href="{% url 'add_airport' %}" class="list-group-item list-group-item-action">Add Airport</a>
                     <a href="{% url 'recycle_crew' %}" class="list-group-item list-group-item-action">Recycle Crew</a>
-                    <a href="{% url 'route_summary' %}" class="list-group-item list-group-item-action">Route Summary</a>
-                    <a href="{% url 'alternative_airports' %}" class="list-group-item list-group-item-action">Alternative Airports</a>
                     <a href="{% url 'simulation_cycle' %}" class="list-group-item list-group-item-action">Simulation Cycle</a>
                 </div>
             </div>
