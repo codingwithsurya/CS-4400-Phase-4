@@ -20,9 +20,12 @@ https://www.youtube.com/watch?v=eXrwF4LXF5c
 ### Setup DB Initially
 ```python manage.py inspectdb > models.py```
 
-### If you want to run the frontend 
+### If you want to run the "frontend" with the Django forms just run the server and navigate to the URL
+```python manage.py runserver```
+
+### If you want to run the frontend w/ React (deprecated)
 ```cd frontendFlights```
-```npm run dev```
+```npm run dev``` 
 
 ### Check which Apps are installed in settings
 ```python manage.py shell -c "from django.conf import settings; print(settings.INSTALLED_APPS)"```
