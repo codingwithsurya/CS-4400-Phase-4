@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ view_title|default:"Data View" }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-info text-white">
+        <h5 class="card-title mb-0">{{ view_title|default:"Data View" }}</h5>
+    </div>
+    <div class="card-body">
+        {% if data %}
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        {% for column in columns %}
+                        <th>{{ column }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr>
+                        {% for value in row %}
+                        <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="alert alert-warning">
+            No data found.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Flight Operations</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <a href="{% url 'add_airplane' %}" class="list-group-item list-group-item-action">Add Airplane</a>
+                    <a href="{% url 'flight_takeoff' %}" class="list-group-item list-group-item-action">Flight Takeoff</a>
+                    <a href="{% url 'flight_landing' %}" class="list-group-item list-group-item-action">Flight Landing</a>
+                    <a href="{% url 'offer_flight' %}" class="list-group-item list-group-item-action">Offer Flight</a>
+                    <a href="{% url 'retire_flight' %}" class="list-group-item list-group-item-action">Retire Flight</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0">Data Views</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <a href="{% url 'flights_in_air' %}" class="list-group-item list-group-item-action">Flights In Air</a>
+                    <a href="{% url 'flights_on_ground' %}" class="list-group-item list-group-item-action">Flights On Ground</a>
+                    <a href="{% url 'people_in_air' %}" class="list-group-item list-group-item-action">People In Air</a>
+                    <a href="{% url 'people_on_ground' %}" class="list-group-item list-group-item-action">People On Ground</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="card-title mb-0">People Management</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <a href="{% url 'add_person' %}" class="list-group-item list-group-item-action">Add Person</a>
+                    <a href="{% url 'grant_revoke_license' %}" class="list-group-item list-group-item-action">Grant/Revoke Pilot License</a>
+                    <a href="{% url 'assign_pilot' %}" class="list-group-item list-group-item-action">Assign Pilot</a>
+                    <a href="{% url 'passengers_board' %}" class="list-group-item list-group-item-action">Passengers Board</a>
+                    <a href="{% url 'passengers_disembark' %}" class="list-group-item list-group-item-action">Passengers Disembark</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="card-title mb-0">System Operations</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <a href="{% url 'add_airport' %}" class="list-group-item list-group-item-action">Add Airport</a>
+                    <a href="{% url 'recycle_crew' %}" class="list-group-item list-group-item-action">Recycle Crew</a>
+                    <a href="{% url 'route_summary' %}" class="list-group-item list-group-item-action">Route Summary</a>
+                    <a href="{% url 'alternative_airports' %}" class="list-group-item list-group-item-action">Alternative Airports</a>
+                    <a href="{% url 'simulation_cycle' %}" class="list-group-item list-group-item-action">Simulation Cycle</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="alert alert-info">
+            <h4>Welcome to the Airport Management System</h4>
+            <p>This system provides a user interface for managing airport operations through stored procedures. Use the sidebar or the dashboard cards to navigate through different operations.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

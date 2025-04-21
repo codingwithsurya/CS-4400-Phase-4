@@ -1,0 +1,9 @@
+<h2>Offer Flight</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <button type="submit">Offer Flight</button>
+</form>

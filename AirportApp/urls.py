@@ -21,14 +21,31 @@ from flight_manager import views as template_views # Rename to avoid conflicts
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', template_views.index), # Your existing template views
-    path('alternative-airport/', template_views.alternative_airport_view),
-    path('flights-in-the-air/', template_views.flights_in_the_air_view),
-    path('flights-on-the-ground/', template_views.flights_on_the_ground_view),
-    path('people-in-the-air/', template_views.people_in_the_air_view),
-    path('people-on-the-ground/', template_views.people_on_the_ground_view),
-    path('route-summary/', template_views.route_summary_view),
-
-    # Include API urls
-    path('api/', include('flight_manager.api.urls')), # Add this line
+    path('', template_views.index, name='index'), # Dashboard
+    
+    # Database Views
+    path('alternative-airport/', template_views.alternative_airport_view, name='alternative_airports'),
+    path('flights-in-the-air/', template_views.flights_in_the_air_view, name='flights_in_air'),
+    path('flights-on-the-ground/', template_views.flights_on_the_ground_view, name='flights_on_ground'),
+    path('people-in-the-air/', template_views.people_in_the_air_view, name='people_in_air'),
+    path('people-on-the-ground/', template_views.people_on_the_ground_view, name='people_on_ground'),
+    path('route-summary/', template_views.route_summary_view, name='route_summary'),
+    
+    # Procedure Forms
+    path('add-airplane/', template_views.add_airplane_view, name='add_airplane'),
+    path('add-airport/', template_views.add_airport_view, name='add_airport'),
+    path('add-person/', template_views.add_person_view, name='add_person'),
+    path('offer-flight/', template_views.offer_flight_view, name='offer_flight'),
+    path('flight-takeoff/', template_views.flight_takeoff_view, name='flight_takeoff'),
+    path('flight-landing/', template_views.flight_landing_view, name='flight_landing'),
+    path('grant-revoke-license/', template_views.grant_revoke_pilot_license_view, name='grant_revoke_license'),
+    path('assign-pilot/', template_views.assign_pilot_view, name='assign_pilot'),
+    path('passengers-board/', template_views.passengers_board_view, name='passengers_board'),
+    path('passengers-disembark/', template_views.passengers_disembark_view, name='passengers_disembark'),
+    path('recycle-crew/', template_views.recycle_crew_view, name='recycle_crew'),
+    path('retire-flight/', template_views.retire_flight_view, name='retire_flight'),
+    path('simulation-cycle/', template_views.simulation_cycle_view, name='simulation_cycle'),
+    
+    # API urls (for backward compatibility)
+    path('api/', include('flight_manager.api.urls')),
 ]
