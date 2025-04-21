@@ -29,7 +29,10 @@ https://www.youtube.com/watch?v=eXrwF4LXF5c
 
 ## Current Admin Password
 * Username: cs4400
-* Password: databasecourse
+* Password: data
+
+## To reset passowrd
+```python manage.py createsuperuser```
 
 ## View Urls
 * /alternative-airport/
