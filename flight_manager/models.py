@@ -201,6 +201,79 @@ class Location(models.Model):
         managed = False
         db_table = 'location'
 
+class Passenger(models.Model):
+    personid = models.OneToOneField('Person', models.DO_NOTHING, db_column='personID', primary_key=True)  # Field name made lowercase.
+    miles = models.IntegerField(blank=True, null=True)
+    funds = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'passenger'
+
+
+class PassengerVacations(models.Model):
+    personid = models.OneToOneField('Person', models.DO_NOTHING, db_column='personID', primary_key=True)  # Field name made lowercase. The composite primary key (personID, sequence) found, that is not supported. The first column is selected.
+    airportid = models.ForeignKey(Airport, models.DO_NOTHING, db_column='airportID')  # Field name made lowercase.
+    sequence = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'passenger_vacations'
+        unique_together = (('personid', 'sequence'),)
+
+
+class Person(models.Model):
+    personid = models.CharField(db_column='personID', primary_key=True, max_length=50)  # Field name made lowercase.
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100, blank=True, null=True)
+    locationid = models.ForeignKey(Location, models.DO_NOTHING, db_column='locationID')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'person'
+
+
+class Pilot(models.Model):
+    personid = models.OneToOneField(Person, models.DO_NOTHING, db_column='personID', primary_key=True)  # Field name made lowercase.
+    taxid = models.CharField(db_column='taxID', unique=True, max_length=50)  # Field name made lowercase.
+    experience = models.IntegerField(blank=True, null=True)
+    commanding_flight = models.ForeignKey(Flight, models.DO_NOTHING, db_column='commanding_flight', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'pilot'
+
+
+class PilotLicenses(models.Model):
+    personid = models.OneToOneField(Pilot, models.DO_NOTHING, db_column='personID', primary_key=True)  # Field name made lowercase. The composite primary key (personID, license) found, that is not supported. The first column is selected.
+    license = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'pilot_licenses'
+        unique_together = (('personid', 'license'),)
+
+
+class Route(models.Model):
+    routeid = models.CharField(db_column='routeID', primary_key=True, max_length=50)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'route'
+
+
+class RoutePath(models.Model):
+    routeid = models.OneToOneField(Route, models.DO_NOTHING, db_column='routeID', primary_key=True)  # Field name made lowercase. The composite primary key (routeID, sequence) found, that is not supported. The first column is selected.
+    legid = models.ForeignKey(Leg, models.DO_NOTHING, db_column='legID')  # Field name made lowercase.
+    sequence = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'route_path'
+        unique_together = (('routeid', 'sequence'),)
+
+
+### Autograding Classes
 
 class Magic44AutogradingHighLevel(models.Model):
     score_tag = models.CharField(max_length=1, blank=True, null=True)
@@ -344,73 +417,3 @@ class Magic44TestResults(models.Model):
         db_table = 'magic44_test_results'
 
 
-class Passenger(models.Model):
-    personid = models.OneToOneField('Person', models.DO_NOTHING, db_column='personID', primary_key=True)  # Field name made lowercase.
-    miles = models.IntegerField(blank=True, null=True)
-    funds = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'passenger'
-
-
-class PassengerVacations(models.Model):
-    personid = models.OneToOneField('Person', models.DO_NOTHING, db_column='personID', primary_key=True)  # Field name made lowercase. The composite primary key (personID, sequence) found, that is not supported. The first column is selected.
-    airportid = models.ForeignKey(Airport, models.DO_NOTHING, db_column='airportID')  # Field name made lowercase.
-    sequence = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = 'passenger_vacations'
-        unique_together = (('personid', 'sequence'),)
-
-
-class Person(models.Model):
-    personid = models.CharField(db_column='personID', primary_key=True, max_length=50)  # Field name made lowercase.
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100, blank=True, null=True)
-    locationid = models.ForeignKey(Location, models.DO_NOTHING, db_column='locationID')  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'person'
-
-
-class Pilot(models.Model):
-    personid = models.OneToOneField(Person, models.DO_NOTHING, db_column='personID', primary_key=True)  # Field name made lowercase.
-    taxid = models.CharField(db_column='taxID', unique=True, max_length=50)  # Field name made lowercase.
-    experience = models.IntegerField(blank=True, null=True)
-    commanding_flight = models.ForeignKey(Flight, models.DO_NOTHING, db_column='commanding_flight', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'pilot'
-
-
-class PilotLicenses(models.Model):
-    personid = models.OneToOneField(Pilot, models.DO_NOTHING, db_column='personID', primary_key=True)  # Field name made lowercase. The composite primary key (personID, license) found, that is not supported. The first column is selected.
-    license = models.CharField(max_length=100)
-
-    class Meta:
-        managed = False
-        db_table = 'pilot_licenses'
-        unique_together = (('personid', 'license'),)
-
-
-class Route(models.Model):
-    routeid = models.CharField(db_column='routeID', primary_key=True, max_length=50)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'route'
-
-
-class RoutePath(models.Model):
-    routeid = models.OneToOneField(Route, models.DO_NOTHING, db_column='routeID', primary_key=True)  # Field name made lowercase. The composite primary key (routeID, sequence) found, that is not supported. The first column is selected.
-    legid = models.ForeignKey(Leg, models.DO_NOTHING, db_column='legID')  # Field name made lowercase.
-    sequence = models.IntegerField()
-
-    class Meta:
-        managed = False
-        db_table = 'route_path'
-        unique_together = (('routeid', 'sequence'),)

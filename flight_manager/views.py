@@ -21,7 +21,7 @@ def index(request):
 ## Add_airplane
 def add_airplane_sp(ip_airlineID, ip_tail_num, ip_seat_capacity, ip_speed, ip_locationID, ip_plane_type, ip_maintenanced, ip_model, ip_neo):
     with connection.cursor() as db_call:
-        db_call.execute("call add_airplane(%s, %s, %s, %s, %s, %s, %s)", [ip_airlineID, ip_tail_num, ip_seat_capacity, ip_speed, ip_locationID, ip_plane_type, ip_maintenanced, ip_model, ip_neo])
+        db_call.execute("call add_airplane(%s, %s, %s, %s, %s, %s, %s, %s, %s)", [ip_airlineID, ip_tail_num, ip_seat_capacity, ip_speed, ip_locationID, ip_plane_type, ip_maintenanced, ip_model, ip_neo])
 
 ## Add_airport
 def add_airport_sp(ip_airportID, ip_airport_name, ip_city, ip_state, ip_country, ip_locationID):
@@ -160,7 +160,7 @@ def add_airplane_view(request):
                     cleaned_data['ip_tail_num'],
                     cleaned_data['ip_seat_capacity'],
                     cleaned_data['ip_speed'],
-                    cleaned_data['ip_locationID'].locationid,
+                    cleaned_data['ip_locationID'],#.locationid,
                     cleaned_data['ip_plane_type'],
                     cleaned_data['ip_maintenanced'],
                     cleaned_data['ip_model'],

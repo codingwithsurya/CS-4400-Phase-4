@@ -19,7 +19,7 @@ sql_files = [
 ]
 
 for i in sql_files:
-    cmd = f'mysql -u {user} {db} < {i}'    
+    cmd = f'mysql -u {user} -psuryavarshini123 {db} < {i}'    
     process = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
     stdout, stderr = process.communicate()
 
