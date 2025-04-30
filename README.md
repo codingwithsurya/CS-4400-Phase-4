@@ -46,9 +46,3 @@ cs 4400 phase 4 project shared github
 2. **Django Views → MySQL Stored Procedures**: The view functions validate form data and directly call the appropriate MySQL stored procedures with the submitted data.
 
 3. **Results → User Interface**: After the database operation completes, Django shows a success message and redirects to the relevant page, or displays an error if something goes wrong.
-
-### Misc
-
-* [Google Doc](https://docs.google.com/document/d/1633UA-v3UTln1s15PQil72YFTob3CcfW-uWh_LKw8yI/edit?usp=sharing)
-* [Video](https://www.youtube.com/watch?v=eXrwF4LXF5c)
-* On minute 9 currently
