@@ -138,7 +138,13 @@ select * from pilot where commanding_flight='ke_64';
 call recycle_crew('ke_64');
 
 -- Test Cases retire_flight Success Case
+-- Just removes the flight. Flight must be empty. 
 call retire_flight('ke_88');
+select * from flight fl 
+left join pilot pil
+on fl.flightID=pil.commanding_flight
+where flightID='ke_88';
+
 
 -- TO DO: Simulation Cycle and Sequences
 
