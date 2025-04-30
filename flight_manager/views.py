@@ -18,12 +18,16 @@ def index(request):
     return render(request, "index.html")
 
 ## ******* Stored Procedures *******
-## After testing, convert to improved function with sp as input
 
 ## Add_airplane
 def add_airplane_sp(ip_airlineID, ip_tail_num, ip_seat_capacity, ip_speed, ip_locationID, ip_plane_type, ip_maintenanced, ip_model, ip_neo):
     with connection.cursor() as db_call:
         db_call.execute("call add_airplane(%s, %s, %s, %s, %s, %s, %s, %s, %s)", [ip_airlineID, ip_tail_num, ip_seat_capacity, ip_speed, ip_locationID, ip_plane_type, ip_maintenanced, ip_model, ip_neo])
+        db_call.execute("UPDATE Airplane Set maintenanced = NULL WHERE maintenanced = 0")
+        db_call.execute("UPDATE Airplane Set model = NULL WHERE model = ''")
+        #db_call.execute("UPDATE Airplane Set neo = FALSE WHERE neo = 0")
+        #db_call.execute("UPDATE Airplane Set neo = TRUE WHERE neo = 1")
+
 
 ## Add_airport
 def add_airport_sp(ip_airportID, ip_airport_name, ip_city, ip_state, ip_country, ip_locationID):
@@ -34,6 +38,8 @@ def add_airport_sp(ip_airportID, ip_airport_name, ip_city, ip_state, ip_country,
 def add_person_sp(ip_personID, ip_first_name, ip_last_name, ip_locationID, ip_taxID, ip_experience, ip_miles, ip_funds):
     with connection.cursor() as db_call:
         db_call.execute("call add_person(%s, %s, %s, %s, %s, %s, %s, %s)", [ip_personID, ip_first_name, ip_last_name, ip_locationID, ip_taxID, ip_experience, ip_miles, ip_funds])
+        # db_call.execute("UPDATE Passenger Set miles = NULL WHERE miles = ''")
+        # db_call.execute("UPDATE Passenger Set funds = NULL WHERE funds = ''")
 
 ## Offer_flight
 def offer_flight_sp(ip_flightID, ip_routeID, ip_support_airline, ip_support_tail, ip_progress, ip_next_time, ip_cost):

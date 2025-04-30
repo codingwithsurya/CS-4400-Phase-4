@@ -55,4 +55,5 @@ class PilotLicenseForm(forms.Form):
 
 class AssignPilotForm(forms.Form):
     ip_flightID = forms.ModelChoiceField(queryset=Flight.objects.all(), label="Flight")
+    #ip_license = forms.CharField(max_length=50, label="Pilot")
     ip_personID = forms.ModelChoiceField(queryset=Person.objects.filter(pilot__isnull=False), label="Pilot")

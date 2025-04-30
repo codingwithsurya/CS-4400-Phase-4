@@ -36,6 +36,8 @@ class SafeAssignPilotForm(forms.Form):
             
         # Get pilots
         with connection.cursor() as cursor:
+            #cursor.execute("SELECT person.personid as fullname FROM person JOIN pilot ON person.personid = pilot.personid")
             cursor.execute("SELECT person.personid, concat(first_name, ' ', last_name) as fullname FROM person JOIN pilot ON person.personid = pilot.personid")
-            pilot_choices = [(row[0], row[1]) for row in cursor.fetchall()]
+            #pilot_choices =[(row[0]) for row in cursor.fetchall()]# cursor.fetchall()#
+            pilot_choices = [(row[0], row[0]) for row in cursor.fetchall()]
             self.fields['ip_personID'].choices = pilot_choices
