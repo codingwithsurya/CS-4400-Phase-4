@@ -71,8 +71,8 @@ sp_main: begin
         leave sp_main;
     end if;
 
-     -- Ensure the location ID is provided and unique
-    if ip_locationID is null or ip_locationID = '' or exists (select 1 from location where locationID = ip_locationID) then
+    -- Ensure the location ID is provided (cannot be null or empty)
+    if ip_locationID is null or ip_locationID = '' then
         leave sp_main;
     end if;
 
