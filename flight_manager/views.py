@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 ## Import Mysql
 from django.db import connection
 from django.contrib import messages
+import subprocess
+import os
 
 # Create your views here.
 from django.urls import path
@@ -398,3 +400,25 @@ def simulation_cycle_view(request):
         return redirect('index')
     
     return render(request, 'simulation_cycle.html')
+
+def reset_database_view(request):
+    if request.method == 'POST':
+        try:
+            # Get base directory
+            base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            reset_script_path = os.path.join(base_dir, 'ResetDB.py')
+            
+            # Run the ResetDB.py script
+            result = subprocess.run(['python3', reset_script_path], 
+                                   capture_output=True, 
+                                   text=True)
+            
+            if result.returncode == 0:
+                messages.success(request, 'Database reset successfully!')
+            else:
+                messages.error(request, f'Error resetting database: {result.stderr}')
+        except Exception as e:
+            messages.error(request, f'Error: {str(e)}')
+        return redirect('index')
+    
+    return render(request, 'reset_database.html')

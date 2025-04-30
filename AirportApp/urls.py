@@ -45,6 +45,7 @@ urlpatterns = [
     path('recycle-crew/', template_views.recycle_crew_view, name='recycle_crew'),
     path('retire-flight/', template_views.retire_flight_view, name='retire_flight'),
     path('simulation-cycle/', template_views.simulation_cycle_view, name='simulation_cycle'),
+    path('reset-database/', template_views.reset_database_view, name='reset_database'),
     
     # API urls (for backward compatibility)
     path('api/', include('flight_manager.api.urls')),
