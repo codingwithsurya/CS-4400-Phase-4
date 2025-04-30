@@ -54,19 +54,15 @@ call offer_flight('un_41', 'americas_three', 'United', 'n330ss', 0, '11:30:00', 
 select * from flight 
 where flightID='un_41';
 
-
 -- Test Cases offer flight Failure
 
 -- Test Cases (flight landing) Sucess Case
 call flight_landing('dl_10');
-
 select * from flight where flightID='dl_10';
 
 -- Test Cases (flight landing) Failure Case
 call flight_landing('oh_99');
-
 select * from flight where flightID='oh_99';
-
 
 -- Test Cases (flight takeoff) Success Case
 call flight_takeoff('ba_61');
@@ -74,9 +70,17 @@ select * from flight where flightID='ba_61';
 
 -- Test Cases (flight takeoff) Failure Case
 call flight_takeoff('oh_99');
+select * from flight where flightID='oh_99';
 
 -- Test Cases (Passenger board) Success Case
 call passengers_board('dl_42');
+
+select * from passenger pa
+join person pe on 
+pa.personID=pe.personID where locationID in 
+(select locationID from flight fl
+join airplane a on fl.support_tail=a.tail_num
+where flightID='dl_42');
 
 -- Test Cases (Passenger board) Failure Case
 call passengers_board('');
@@ -84,8 +88,22 @@ call passengers_board('');
 -- Test Cases passengers_disembark Success Case
 call passengers_disembark('lf_67');
 
+select * from passenger pa
+join person pe on 
+pa.personID=pe.personID where locationID in 
+(select locationID from flight fl
+join airplane a on fl.support_tail=a.tail_num
+where flightID='lf_67');
+
 -- Test Cases passengers_disembark Failure Case
 call passengers_disembark('lf_20');
+
+select * from passenger pa
+join person pe on 
+pa.personID=pe.personID where locationID in 
+(select locationID from flight fl
+join airplane a on fl.support_tail=a.tail_num
+where flightID='lf_20');
 
 -- Test Cases assign_pilot Success Case
 call assign_pilot('ry_34', 'p19');
@@ -96,6 +114,20 @@ join person pe on pil.personID=pe.personID
 where pe.personID='p19';
 
 -- Test Cases recycle_crew Success Case
+-- Consider the location of the pilots at the airport the flight landed at. 
+select * from flight fl 
+join airplane ai on fl.support_tail=ai.tail_num
+where flightID='ke_64';
+
+select leg.arrival
+from route_path
+join leg on route_path.legID = leg.legID
+where route_path.routeID = @route_id 
+and route_path.sequence = @current_progress;
+
+
+select * from airport;
+
 call recycle_crew('ke_64');
 
 -- Test Cases retire_flight Success Case
@@ -103,7 +135,9 @@ call retire_flight('ke_88');
 
 -- TO DO: Simulation Cycle and Sequences
 
--- Check Views
+
+
+-- Check Views (Matching)
 select * from alternative_airports;
 select * from flights_in_the_air;
 select * from flights_on_the_ground;
