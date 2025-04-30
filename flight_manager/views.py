@@ -31,12 +31,12 @@ def add_airport_sp(ip_airportID, ip_airport_name, ip_city, ip_state, ip_country,
 ## Add_person
 def add_person_sp(ip_personID, ip_first_name, ip_last_name, ip_locationID, ip_taxID, ip_experience, ip_miles, ip_funds):
     with connection.cursor() as db_call:
-        db_call.execute("call add_airplane(%s, %s, %s, %s, %s, %s, %s, %s)", [ip_personID, ip_first_name, ip_last_name, ip_locationID, ip_taxID, ip_experience, ip_miles, ip_funds])
+        db_call.execute("call add_person(%s, %s, %s, %s, %s, %s, %s, %s)", [ip_personID, ip_first_name, ip_last_name, ip_locationID, ip_taxID, ip_experience, ip_miles, ip_funds])
 
 ## Offer_flight
 def offer_flight_sp(ip_flightID, ip_routeID, ip_support_airline, ip_support_tail, ip_progress, ip_next_time, ip_cost):
     with connection.cursor() as db_call:
-        db_call.execute("call flight_landing(%s, %s, %s, %s, %s, %s, %s)", [ip_flightID, ip_routeID, ip_support_airline, ip_support_tail, ip_progress, ip_next_time, ip_cost ])
+        db_call.execute("call offer_flight(%s, %s, %s, %s, %s, %s, %s)", [ip_flightID, ip_routeID, ip_support_airline, ip_support_tail, ip_progress, ip_next_time, ip_cost ])
 
 ## Flight_landing
 def flight_landing_sp(ip_flightID):
@@ -51,12 +51,12 @@ def flight_takeoff_sp(ip_flightID):
 ## Grant or Revoke pilot license
 def grant_or_revoke_pilot_license_sp(ip_personID, ip_license):
     with connection.cursor() as db_call:
-        db_call.execute("call grant_or_revoke_pilot_license(%s)", [ip_personID, ip_license])
+        db_call.execute("call grant_or_revoke_pilot_license(%s, %s)", [ip_personID, ip_license])
 
 ## Assign Pilot
 def assign_pilot_sp(ip_flightID, ip_personID):
     with connection.cursor() as db_call:
-        db_call.execute("call assign_pilot(%s)", [ip_flightID, ip_personID])
+        db_call.execute("call assign_pilot(%s, %s)", [ip_flightID, ip_personID])
 
 ## Passengers_Board
 def passengers_board_sp(ip_flightID):
@@ -188,7 +188,7 @@ def add_airport_view(request):
                     cleaned_data['ip_city'],
                     cleaned_data['ip_state'],
                     cleaned_data['ip_country'],
-                    cleaned_data['ip_locationID'].locationid
+                    cleaned_data['ip_locationID'],#.locationid
                 )
                 messages.success(request, 'Airport added successfully!')
                 return redirect('alternative_airports')
@@ -210,7 +210,7 @@ def add_person_view(request):
                     cleaned_data['ip_personID'],
                     cleaned_data['ip_first_name'],
                     cleaned_data['ip_last_name'],
-                    cleaned_data['ip_locationID'].locationid,
+                    cleaned_data['ip_locationID'],#.locationid,
                     cleaned_data['ip_taxID'],
                     cleaned_data['ip_experience'],
                     cleaned_data['ip_miles'],
@@ -236,7 +236,7 @@ def offer_flight_view(request):
                     cleaned_data['ip_flightID'],
                     cleaned_data['ip_routeID'].routeid,
                     cleaned_data['ip_support_airline'].airlineid,
-                    cleaned_data['ip_support_tail'].tail_num,
+                    cleaned_data['ip_support_tail'],
                     cleaned_data['ip_progress'],
                     cleaned_data['ip_next_time'],
                     cleaned_data['ip_cost']

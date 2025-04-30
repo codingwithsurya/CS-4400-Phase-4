@@ -7,17 +7,24 @@ select * from airplane ap
 join airline al 
 on ap.airlineID=al.airlineID;
 
--- Test Cases Add airplane Sucess
+-- Test Cases Add airplane Sucess (Works Currently)
 call add_airplane('Delta', 'n281fc', 6, 500, 'plane_41', 'Airbus', null, null, TRUE);
+
+select * from airplane ap 
+join airline al 
+on ap.airlineID=al.airlineID;
 
 -- Test Cases Add airplane Failure
 
--- Test Cases Add airport Success
+-- Test Cases Add airport Success (Works Currently)
 call add_airport('JFK', 'John F_Kennedy International', 'New York', 'New York', 'USA', 'port_33');
+
+select * from airport;
 
 -- Test Cases Add airport Failure
 
--- Test Cases Add Person Success
+-- Test Cases Add Person Success (error currently? )
+# Error: (1318, 'Incorrect number of arguments for PROCEDURE flight_tracking.add_airplane; expected 9, got 8')
 call add_person('p61', 'Sabrina', 'Duncan', 'port_1', '366-50-3732', 27, null, null);
 
 -- Test Cases Add Person Failure

@@ -10,10 +10,10 @@ admin.site.register(Post)
 
 admin.site.register(Airline)
 # Says already registered?
-#admin.site.register(Airplane)
+admin.site.register(Airplane)
 admin.site.register(Airport)
 admin.site.register(Flight)
-#admin.site.register(Passenger)
+admin.site.register(Passenger)
 admin.site.register(PassengerVacations)
 admin.site.register(Person)
 admin.site.register(Pilot)
